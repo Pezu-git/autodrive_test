@@ -13,5 +13,5 @@ use App\Http\Controllers\XmlController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::match(['post', 'get'], 'xml', [XmlController::class, 'store'])->name('xml-loader');
+Route::get('/xml', [XmlController::class, 'index']);
+Route::post('/xml/parse', [XmlController::class, 'store'])->name('xml-loader');

@@ -7,18 +7,15 @@ use App\Models\XmlData;
 
 class XmlController extends Controller
 {
+   
+
     
-    public function store(Request $req)
+    public function store($file)
     {
-
-        
-        $xmlVar  = $req->file;
-
-        
-            if(!$req->file) {
+        $xmlVar  = $file;
+            if(!$file) {
                 $xmlVar = 'data.xml';
             }
-
             $xmlDataString = file_get_contents(public_path($xmlVar));
             $phpDataArray = json_decode(json_encode((array) simplexml_load_string($xmlDataString)), true);
     
@@ -44,9 +41,11 @@ class XmlController extends Controller
                     }   
                 }
                 XmlData::insert($dataArray);
-                return back()->with('success','Data saved!');
+                return 'Ok';
+                // return back()->with('success','Data saved!');
             }
+            return back()->with('Data?');
         
-        return view("xml-data");
+        
     }
 }
