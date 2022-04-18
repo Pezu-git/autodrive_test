@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+  return view('welcome');
+});
 //!Dealer 
 //allDealerr
 Route::get('/xml/dealer', [App\Http\Controllers\DealerController::class, 'index'])->name('dealer_all');
