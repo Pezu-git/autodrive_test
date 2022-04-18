@@ -59,7 +59,7 @@ class BrandController extends Controller
 
     public function show(Request $request)
     {
-        $brand = Brand::where('id', $request->brand)->first();
+        $brand = Brand::where('brand', $request->brand)->first();
         return $brand;
     }
 
