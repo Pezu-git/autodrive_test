@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 //!Dealer 
-//allDealer
+//allDealerr
 Route::post('/xml/dealer', [App\Http\Controllers\DealerController::class, 'index'])->name('dealer_all');
 //parse
 Route::post('/xml/dealer/parse', [App\Http\Controllers\DealerController::class, 'store'])->name('dealer_parse');
