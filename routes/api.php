@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 //!Dealer 
 //allDealerr
-Route::post('/xml/dealer', [App\Http\Controllers\DealerController::class, 'index'])->name('dealer_all');
+Route::get('/xml/dealer', [App\Http\Controllers\DealerController::class, 'index'])->name('dealer_all');
 //parse
 Route::post('/xml/dealer/parse', [App\Http\Controllers\DealerController::class, 'store'])->name('dealer_parse');
 /* show 
@@ -35,7 +35,7 @@ Route::post('/xml/dealer/destroy', [App\Http\Controllers\DealerController::class
 
 //!Car
 //all
-Route::post('/xml/car', [App\Http\Controllers\XmlController::class, 'index'])->name('car_all');
+Route::get('/xml/car', [App\Http\Controllers\XmlController::class, 'index'])->name('car_all');
 //parse
 Route::post('/xml/car/parse', [App\Http\Controllers\XmlController::class, 'store'])->name('car_parse');
 /* show 
@@ -53,7 +53,7 @@ Route::post('/xml/car/destroy', [App\Http\Controllers\XmlController::class, 'des
 
 //!Brands
 //all
-Route::post('/xml/brand', [App\Http\Controllers\BrandController::class, 'index'])->name('brand_all');
+Route::get('/xml/brand', [App\Http\Controllers\BrandController::class, 'index'])->name('brand_all');
 //parse
 Route::post('/xml/brand/parse', [App\Http\Controllers\BrandController::class, 'store'])->name('brand_parse');
 /* show
@@ -69,9 +69,9 @@ Route::post('/xml/brand/update', [App\Http\Controllers\BrandController::class, '
 */
 Route::post('/xml/brand/destroy', [App\Http\Controllers\BrandController::class, 'destroy'])->name('brand_destroy');
 
-//?Category
+//!Category
 //all
-Route::post('/xml/category', [App\Http\Controllers\CategoryController::class, 'index'])->name('category_all');
+Route::get('/xml/category', [App\Http\Controllers\CategoryController::class, 'index'])->name('category_all');
 //parse
 Route::post('/xml/category/parse', [App\Http\Controllers\CategoryController::class, 'store'])->name('category_parse');
 /* show
@@ -89,7 +89,7 @@ Route::post('/xml/category/destroy', [App\Http\Controllers\CategoryController::c
 
 //!Models
 //all
-Route::post('/xml/model', [App\Http\Controllers\ModelsController::class, 'index'])->name('model_all');
+Route::get('/xml/model', [App\Http\Controllers\ModelsController::class, 'index'])->name('model_all');
 //parse
 Route::post('/xml/model/parse', [App\Http\Controllers\ModelsController::class, 'store'])->name('model_parse');
 /* show
@@ -108,7 +108,7 @@ Route::post('/xml/model/destroy', [App\Http\Controllers\ModelsController::class,
 
 //!BodyConfigurations
 //all
-Route::post('/xml/bodyConfiguration', [App\Http\Controllers\BodyConfigurationController::class, 'index'])->name('bodyConf_all');
+Route::get('/xml/bodyConfiguration', [App\Http\Controllers\BodyConfigurationController::class, 'index'])->name('bodyConf_all');
 //parse
 Route::post('/xml/bodyConfiguration/parse', [App\Http\Controllers\BodyConfigurationController::class, 'store'])->name('bodyConf_parse');
 /* show
@@ -126,7 +126,7 @@ Route::post('/xml/bodyConfiguration/destroy', [App\Http\Controllers\BodyConfigur
 
 //!Generation
 //all
-Route::post('/xml/generation', [App\Http\Controllers\GenerationController::class, 'index'])->name('generation_all');
+Route::get('/xml/generation', [App\Http\Controllers\GenerationController::class, 'index'])->name('generation_all');
 //parse
 Route::post('/xml/generation/parse', [App\Http\Controllers\GenerationController::class, 'store'])->name('generation_parse');
 /* show
@@ -144,7 +144,7 @@ Route::post('/xml/generation/destroy', [App\Http\Controllers\GenerationControlle
 
 //!Modification
 //all
-Route::post('/xml/modification', [App\Http\Controllers\ModificationController::class, 'index'])->name('modification_all');
+Route::get('/xml/modification', [App\Http\Controllers\ModificationController::class, 'index'])->name('modification_all');
 //parse
 Route::post('/xml/modification/parse', [App\Http\Controllers\ModificationController::class, 'store'])->name('modification_parse');
 /* show
@@ -158,7 +158,7 @@ Route::post('/xml/modification/destroy', [App\Http\Controllers\ModificationContr
 
 //!Complectation
 //all
-Route::post('/xml/complectation', [App\Http\Controllers\ComplectationController::class, 'index'])->name('complectation_all');
+Route::get('/xml/complectation', [App\Http\Controllers\ComplectationController::class, 'index'])->name('complectation_all');
 //parse
 Route::post('/xml/complectation/parse', [App\Http\Controllers\ComplectationController::class, 'store'])->name('complectation_parse');
 /* show
@@ -172,7 +172,7 @@ Route::post('/xml/complectation/destroy', [App\Http\Controllers\ModificationCont
 
 //!Engine
 //all
-Route::post('/xml/engine', [App\Http\Controllers\EngineController::class, 'index'])->name('engine_all');
+Route::get('/xml/engine', [App\Http\Controllers\EngineController::class, 'index'])->name('engine_all');
 //parse
 Route::post('/xml/engine/parse', [App\Http\Controllers\EngineController::class, 'store'])->name('engine_parse');
 /* show
@@ -190,7 +190,7 @@ Route::post('/xml/engine/destroy', [App\Http\Controllers\EngineController::class
 
 //!BodyTypes
 //all
-Route::post('/xml/bodyType', [App\Http\Controllers\BodyTypeController::class, 'index'])->name('bodyType_all');
+Route::get('/xml/bodyType', [App\Http\Controllers\BodyTypeController::class, 'index'])->name('bodyType_all');
 //parse
 Route::post('/xml/bodyType/parse', [App\Http\Controllers\BodyTypeController::class, 'store'])->name('bodyType_parse');
 /* show
@@ -208,7 +208,7 @@ Route::post('/xml/bodyType/destroy', [App\Http\Controllers\BodyTypeController::c
 
 //!BodyColor
 //all
-Route::post('/xml/bodyColor', [App\Http\Controllers\BodyColorController::class, 'index'])->name('bodyColor_all');
+Route::get('/xml/bodyColor', [App\Http\Controllers\BodyColorController::class, 'index'])->name('bodyColor_all');
 //parse
 Route::post('/xml/bodyColor/parse', [App\Http\Controllers\BodyColorController::class, 'store'])->name('bodyColor_parse');
 /* show
@@ -222,7 +222,7 @@ Route::post('/xml/bodyColor/destroy', [App\Http\Controllers\BodyColorController:
 
 //!DriveTypes
 //all
-Route::post('/xml/driveType', [App\Http\Controllers\DriveTypeController::class, 'index'])->name('driveType_all');
+Route::get('/xml/driveType', [App\Http\Controllers\DriveTypeController::class, 'index'])->name('driveType_all');
 //parse
 Route::post('/xml/driveType/parse', [App\Http\Controllers\DriveTypeController::class, 'store'])->name('driveType_parse');
 /* show
@@ -236,7 +236,7 @@ Route::post('/xml/driveType/destroy', [App\Http\Controllers\DriveTypeController:
 
 //!GearboxType
 //all
-Route::post('/xml/gearboxType', [App\Http\Controllers\GearboxTypeController::class, 'index'])->name('gearboxType_all');
+Route::get('/xml/gearboxType', [App\Http\Controllers\GearboxTypeController::class, 'index'])->name('gearboxType_all');
 //parse
 Route::post('/xml/gearboxType/parse', [App\Http\Controllers\GearboxTypeController::class, 'store'])->name('gearboxType_parse');
 /* show
@@ -250,7 +250,7 @@ Route::post('/xml/gearboxType/destroy', [App\Http\Controllers\GearboxTypeControl
 
 //!Mileage
 //all
-Route::post('/xml/mileage', [App\Http\Controllers\MileageController::class, 'index'])->name('mileage_all');
+Route::get('/xml/mileage', [App\Http\Controllers\MileageController::class, 'index'])->name('mileage_all');
 //parse
 Route::post('/xml/mileage/parse', [App\Http\Controllers\MileageController::class, 'store'])->name('mileage_parse');
 /* show
@@ -268,7 +268,7 @@ Route::post('/xml/mileage/destroy', [App\Http\Controllers\MileageController::cla
 
 //!Price
 //all
-Route::post('/xml/price', [App\Http\Controllers\PriceListController::class, 'index'])->name('price_all');
+Route::get('/xml/price', [App\Http\Controllers\PriceListController::class, 'index'])->name('price_all');
 //parse
 Route::post('/xml/price/parse', [App\Http\Controllers\PriceListController::class, 'store'])->name('price_parse');
 /* show
