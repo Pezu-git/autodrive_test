@@ -11,17 +11,12 @@ return new class extends Migration
      *
      * @return void
      */
-
-     
-
-
     public function up()
     {
-        Schema::create('xml_data', function (Blueprint $table) {
+        Schema::create('body_types', function (Blueprint $table) {
             $table->id();
-            $table->string('brand', 100);
-            $table->string('model', 100);
-            $table->string('generation', 100);
+            $table->string('bodyType', 100);
+            $table->string('bodyDoorCount', 100);
         });
     }
 
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('xml_data');
+        Schema::dropIfExists('body_types');
     }
 };
