@@ -73,16 +73,21 @@ class XmlController extends Controller
     public function update(Request $request)
     {
         $car = XmlData::where('id', $request->id)->first();
-        return $request;
-        // $car->dealer = $request->name;
-        // $car->save();
-        // return 'dealer update';
+        $car->dealer_id = $request->dealer_id;
+        $car->uin = $request->uin;
+        $car->category = $request->category;
+        $car->brand = $request->brand;
+        $car->model = $request->model;
+        $car->generation = $request->generation;
+        $car->bodyConfiguration = $request->bodyConfiguration;
+        $car->modification = $request->modification;
+        $car->save();
+        return 'Car update';
     }
 
     public function destroy(Request $request)
     {
         XmlData::where('id', $request->id)->delete();
-
         return 'Car destroy';
     }
 

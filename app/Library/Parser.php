@@ -42,7 +42,7 @@ class Parser
   {
     foreach ($data as $key => $value) {
       if ($data[$key] === []) {
-        $data[$key] = '';
+        $data[$key] = false;
       }
     }
     return $data;

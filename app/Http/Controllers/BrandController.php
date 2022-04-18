@@ -65,7 +65,7 @@ class BrandController extends Controller
 
     public function update(Request $request)
     {
-        $update = Brand::where('dealer', $request->brand)->first();
+        $update = Brand::where('brand', $request->brand)->first();
         $update->brand = $request->name;
         $update->save();
         return 'Brand update';
