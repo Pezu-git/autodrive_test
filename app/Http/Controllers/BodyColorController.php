@@ -13,38 +13,19 @@ class BodyColorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    static function index()
     {
         return BodyColor::all();
     }
 
-    public function store(Request $request)
+    static function store(Request $request)
     {
         $parser = new Parser;
         $model = new BodyColor;
-        $phpDataArray = $parser->parseXml($request);
-        $tableCol = ["bodyColor", "bodyColorMetallic"];
-        $dataArray = array();
-        $dataArray1 = array();
-        foreach ($phpDataArray['vehicle'] as $index => $data) {
+        $tag = 'bodyColor';
+        $insertParseXml = $parser->parseXml($request, $model, $tag);
 
-            $newData = $parser->vehicleToStr($data);
-            foreach ($tableCol as $key => $value) {
-                $dataArray1[$value] = $newData[$value];
-            }
-            $dataArray[] = $dataArray1;
-        }
-
-        foreach ($dataArray as $key => $value) {
-            $fid = $model::where('bodyColor', $value['bodyColor'])->where('bodyColorMetallic', $value['bodyColorMetallic'])->first();
-            if (!$fid) {
-                $model::insert([
-                    "bodyColor" => $value['bodyColor'],
-                    "bodyColorMetallic" => (int)$value['bodyColorMetallic'],
-                ]);
-            }
-        }
-        return 'ok!';
+        return $insertParseXml;
     }
 
     public function destroy(Request $request)

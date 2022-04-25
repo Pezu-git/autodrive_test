@@ -15,9 +15,7 @@ return new class extends Migration
     {
         Schema::create('models', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('brand_id')->default(0);
-            $table->foreign('brand_id')->references('id')->on('brands')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('model', 100);
+            $table->string('name', 100);
         });
     }
 

@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PriceList extends Model
+class Price extends Model
 {
     use HasFactory;
     public $timestamps = false;
 
     protected $fillable = [
-        "data_id", "price", "specialOffer", "specialOfferPreviousPrice", "tradeinDiscount", "creditDiscount", "insuranceDiscount", "maxDiscount"
+        'id', 'name'
     ];
 
     public function data()

@@ -10,7 +10,7 @@ class Engine extends Model
     use HasFactory;
 
     protected $fillable = [
-        "data_id", "engineType", "engineVolume", "enginePower"
+        'id', 'name'
     ];
 
     public function data()

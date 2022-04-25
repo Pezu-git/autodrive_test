@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('data__body_color', function (Blueprint $table) {
+        Schema::create('steering_wheels', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('data_id');
-            $table->unsignedBigInteger('bodyColor_id');
-            $table->foreign('data_id')->references('id')->on('xml_data');
-            $table->foreign('bodyColor_id')->references('id')->on('body_colors');
+            $table->string('name', 100);
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('steering_wheels');
     }
 };

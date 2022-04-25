@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('drive_types', function (Blueprint $table) {
             $table->id();
-            $table->string('driveType', 100);
+            $table->string('name', 100);
         });
     }
 

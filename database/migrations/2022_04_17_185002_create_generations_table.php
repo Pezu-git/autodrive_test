@@ -15,9 +15,7 @@ return new class extends Migration
     {
         Schema::create('generations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('bodyConf_id')->default(0);
-            $table->foreign('bodyConf_id')->references('id')->on('body_configurations')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('generation', 100);
+            $table->string('name', 100);
         });
     }
 

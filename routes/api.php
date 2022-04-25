@@ -272,21 +272,21 @@ Route::post('/xml/mileage/destroy', [App\Http\Controllers\MileageController::cla
 
 //!Price
 //all
-Route::get('/xml/price', [App\Http\Controllers\PriceListController::class, 'index'])->name('price_all');
+Route::get('/xml/price', [App\Http\Controllers\PriceController::class, 'index'])->name('price_all');
 //parse
-Route::post('/xml/price/parse', [App\Http\Controllers\PriceListController::class, 'store'])->name('price_parse');
+Route::post('/xml/price/parse', [App\Http\Controllers\PriceController::class, 'store'])->name('price_parse');
 /* show
 * @param {data_id}
 */
-Route::post('/xml/price/show', [App\Http\Controllers\PriceListController::class, 'show'])->name('price_show');
+Route::post('/xml/price/show', [App\Http\Controllers\PriceController::class, 'show'])->name('price_show');
 /* update
 * @param {data_id, price, specialOffer, specialOfferPreviousPrice, tradeinDiscount, creditDiscount, insuranceDiscount, maxDiscount}
 */
-Route::post('/xml/price/update', [App\Http\Controllers\PriceListController::class, 'update'])->name('price_update');
+Route::post('/xml/price/update', [App\Http\Controllers\PriceController::class, 'update'])->name('price_update');
 /* destroy
 * @param {data_id}
 */
-Route::post('/xml/price/destroy', [App\Http\Controllers\PriceListController::class, 'destroy'])->name('price_destroy');
+Route::post('/xml/price/destroy', [App\Http\Controllers\PriceController::class, 'destroy'])->name('price_destroy');
 
 //?SteeringWheel
 //all
@@ -306,3 +306,7 @@ Route::post('/xml/price/destroy', [App\Http\Controllers\PriceListController::cla
 /* destroy
 * @param
 */
+
+Route::post('/xml/equipment/parse', [App\Http\Controllers\EquipmentController::class, 'store'])->name('equipment');
+Route::post('/xml/description/parse', [App\Http\Controllers\DescriptionController::class, 'store'])->name('description');
+Route::post('/xml/type/parse', [App\Http\Controllers\TypeController::class, 'store'])->name('type');

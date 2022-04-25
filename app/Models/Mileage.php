@@ -12,7 +12,7 @@ class Mileage extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'data_id', "mileage", "mileageUnit"
+        'id', 'name'
     ];
 
     public function data()

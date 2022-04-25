@@ -15,11 +15,7 @@ return new class extends Migration
     {
         Schema::create('engines', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('data_id')->default(0);
-            $table->foreign('data_id')->references('id')->on('xml_data');
-            $table->string('engineType', 100)->default('');
-            $table->integer('engineVolume');
-            $table->integer('enginePower');
+            $table->string('name', 100);
         });
     }
 

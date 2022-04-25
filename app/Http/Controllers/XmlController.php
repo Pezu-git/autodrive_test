@@ -7,6 +7,7 @@ use App\Models\XmlData;
 use App\Models\GearboxType;
 use App\Models\BodyColor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class XmlController extends Controller
 {
@@ -16,50 +17,69 @@ class XmlController extends Controller
         return XmlData::all();
     }
 
-    public function store(Request $request)
+    static function store(Request $request)
     {
-
-        // return $this->setGearboxPivot($request);
-        $parser = new Parser;
         $model = new XmlData;
-        $tag = 'id';
-        $tableCol = ["id", "uin", "brand", "model", "generation", "bodyConfiguration", "modification", "category", "dealer"];
-        $insertParseXml = $parser->insertToDb($request, $tableCol);
-
-
         if ($request['file'] === '' || $request['file'] === null) {
             $xmlVar = 'data.xml';
         } else {
             $xmlVar  = $request['file'] . '.xml';
         }
         $xmlDataString = file_get_contents(public_path($xmlVar));
-        $xmll = simplexml_load_string($xmlDataString);
+        $phpDataArray = json_decode(json_encode((array) simplexml_load_string($xmlDataString, null, LIBXML_NOCDATA)), true);
         $arr = [];
-        for ($i = 0; $i < count($xmll->vehicle); $i++) {
-            foreach ($xmll->vehicle[$i]->dealer as $a => $b) {
-                array_push($arr, $b);
+        foreach ($phpDataArray['vehicle'] as $index => $data) {
+            foreach ($data as $key => $value) {
+                $id = $data['id'];
+                $arr['id'] = $id;
+                $arr[$key] = $data[$key];
+                if ($data[$key] === []) {
+                    $data[$key] = null;
+                    $arr[$key] = null;
+                }
             }
-        }
-        foreach ($insertParseXml as $key => $value) {
-            $t = array_search($value['dealer'], $arr);
-            $ts = json_decode(json_encode($arr), true);
-
-            $value += ['dealer_id' => $ts[$t]['@attributes']['id']];
-            $insertParseXml[$key] += ['dealer_id' => $ts[$t]['@attributes']['id']];
-        }
-
-        foreach ($insertParseXml as $key => $value) {
-            $model::insert([
-                "id" => $value['id'],
-                "uin" => $value['uin'],
-                "brand" => $value['brand'],
-                "model" => $value['model'],
-                "generation" => $value['generation'],
-                "bodyConfiguration" => $value['bodyConfiguration'],
-                "modification" => $value['modification'],
-                "category" => $value['category'],
-                "dealer_id" => $value['dealer_id'],
-            ]);
+            $arr1 = [];
+            foreach ($arr as $key => $value) {
+                $arr1['id'] = $id;
+                if ($key !== 'id') {
+                    $result = mb_strtolower(preg_replace('/\B([A-Z])/', '_$1', $key) . 's');
+                    try {
+                        $f = DB::table($result)->where('name', $arr[$key])->first()->id;
+                        $arr1[$key] = $f;
+                    } catch (\Exception $e) {
+                        $arr1[$key] = null;
+                    }
+                    if (substr($key, -1) === 'y') {
+                        try {
+                            $str = substr_replace($key, 'ies', -1);
+                            $f = DB::table($str)->where('name', $arr[$key])->first()->id;
+                            $arr1[$key] = $f;
+                        } catch (\Exception $e) {
+                            $arr1[$key] = null;
+                        }
+                    }
+                }
+                $desc = DB::table('descriptions')->where('car_id', $id)->first()->id;
+                $arr1['description'] = $desc;
+                if (array_key_exists('equipment', $data)) {
+                    $equipmentArr = [];
+                    foreach ($data['equipment']['group'] as $key => $value) {
+                        if (gettype($value) === 'array' && array_key_exists('@attributes', $value)) {
+                            $equipmentArr[] = $value['@attributes']['id'];
+                        }
+                    }
+                    $arr1['equipment'] = json_encode($equipmentArr);
+                } else {
+                    $arr1['equipment'] = null;
+                }
+            }
+            foreach ($arr1 as $key => $value) {
+                $fid = $model::where('id', $arr1['id'])->first();
+                if (!$fid) {
+                    $model::insert($arr1);
+                    $model->equipment = $arr1['equipment'];
+                }
+            };
         }
         return 'ok!';
     }
@@ -91,32 +111,32 @@ class XmlController extends Controller
         return 'Car destroy';
     }
 
-    public function setGearboxPivot($request)
-    {
-        $parser = new Parser;
-        $tableCol = ["id", "gearboxType", "gearboxGearCount"];
-        $insertParseXml = $parser->insertToDb($request, $tableCol);
+    // public function setGearboxPivot($request)
+    // {
+    //     $parser = new Parser;
+    //     $tableCol = ["id", "gearboxType", "gearboxGearCount"];
+    //     $insertParseXml = $parser->insertToDb($request, $tableCol);
 
-        foreach ($insertParseXml as $key => $value) {
-            $gearBox = GearboxType::where('gearboxType', $value['gearboxType'])->where('gearboxGearCount', $value['gearboxGearCount'])->first();
-            $data = XmlData::where('id', $value['id'])->first();
+    //     foreach ($insertParseXml as $key => $value) {
+    //         $gearBox = GearboxType::where('gearboxType', $value['gearboxType'])->where('gearboxGearCount', $value['gearboxGearCount'])->first();
+    //         $data = XmlData::where('id', $value['id'])->first();
 
-            $data->gearboxTypeList()->attach($gearBox);
-        }
-        return 'ok!';
-    }
-    //!
-    public function setBodyColorPivot($request)
-    {
-        $parser = new Parser;
-        $tableCol = ["id", "bodyColor", "bodyColorMetallic"];
-        $insertParseXml = $parser->insertToDb($request, $tableCol);
+    //         $data->gearboxTypeList()->attach($gearBox);
+    //     }
+    //     return 'ok!';
+    // }
+    // //!
+    // public function setBodyColorPivot($request)
+    // {
+    //     $parser = new Parser;
+    //     $tableCol = ["id", "bodyColor", "bodyColorMetallic"];
+    //     $insertParseXml = $parser->insertToDb($request, $tableCol);
 
-        foreach ($insertParseXml as $key => $value) {
-            $bodyColor = BodyColor::where('bodyColor', $value['bodyColor'])->where('bodyColorMetallic', $value['bodyColorMetallic'])->first();
-            $data = XmlData::where('id', $value['id'])->first();
-            $data->bodyColorList()->attach($bodyColor);
-        }
-        return 'ok';
-    }
+    //     foreach ($insertParseXml as $key => $value) {
+    //         $bodyColor = BodyColor::where('bodyColor', $value['bodyColor'])->where('bodyColorMetallic', $value['bodyColorMetallic'])->first();
+    //         $data = XmlData::where('id', $value['id'])->first();
+    //         $data->bodyColorList()->attach($bodyColor);
+    //     }
+    //     return 'ok';
+    // }
 }

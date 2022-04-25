@@ -12,7 +12,7 @@ class Complectation extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'id', "bodyConf_id", "complectation"
+        'id', 'name'
     ];
 
     public function configurationList()

@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('body_colors', function (Blueprint $table) {
             $table->id();
-            $table->string('bodyColor', 100)->default('');
-            $table->boolean('bodyColorMetallic', 100)->default(false);
+            $table->string('name', 100)->default('');
         });
     }
 

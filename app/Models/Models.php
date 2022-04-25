@@ -12,7 +12,7 @@ class Models extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'id', "brand_id", "model"
+        'id', 'name'
     ];
 
     public function brands()

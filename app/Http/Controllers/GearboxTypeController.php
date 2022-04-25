@@ -13,32 +13,14 @@ class GearboxTypeController extends Controller
         return GearboxType::all();
     }
 
-    public function store(Request $request)
+    static function store(Request $request)
     {
         $parser = new Parser;
         $model = new GearboxType;
-        $phpDataArray = $parser->parseXml($request);
-        $tableCol = ["gearboxType", "gearboxGearCount"];
-        $dataArray = array();
-        $dataArray1 = array();
-        foreach ($phpDataArray['vehicle'] as $index => $data) {
+        $tag = 'gearboxType';
+        $insertParseXml = $parser->parseXml($request, $model, $tag);
 
-            $newData = $parser->vehicleToStr($data);
-            foreach ($tableCol as $key => $value) {
-                $dataArray1[$value] = $newData[$value];
-            }
-            $dataArray[] = $dataArray1;
-        }
-        foreach ($dataArray as $key => $value) {
-            $fid = $model::where('gearboxType', $value['gearboxType'])->where('gearboxGearCount', $value['gearboxGearCount'])->first();
-            if (!$fid) {
-                $model::insert([
-                    "gearboxType" => $value['gearboxType'],
-                    "gearboxGearCount" => $value['gearboxGearCount'],
-                ]);
-            }
-        }
-        return 'ok!';
+        return $insertParseXml;
     }
 
     public function show(Request $request)

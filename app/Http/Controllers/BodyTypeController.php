@@ -14,23 +14,14 @@ class BodyTypeController extends Controller
         return BodyType::all();
     }
 
-    public function store(Request $request)
+    static function store(Request $request)
     {
         $parser = new Parser;
         $model = new BodyType;
-        $tableCol = ["bodyType", "bodyDoorCount"];
-        $insertParseXml = $parser->insertToDb($request, $tableCol);
+        $tag = 'bodyType';
+        $insertParseXml = $parser->parseXml($request, $model, $tag);
 
-        foreach ($insertParseXml as $key => $value) {
-            $fid = $model::where('bodyType', $value['bodyType'])->first();
-            if (!$fid) {
-                $model::insert([
-                    "bodyType" => $value['bodyType'],
-                    "bodyDoorCount" => $value['bodyDoorCount'],
-                ]);
-            }
-        }
-        return 'ok!';
+        return $insertParseXml;
     }
 
     public function show(Request $request)

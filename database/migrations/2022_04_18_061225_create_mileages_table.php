@@ -15,10 +15,7 @@ return new class extends Migration
     {
         Schema::create('mileages', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('data_id');
-            $table->foreign('data_id')->references('id')->on('xml_data');
-            $table->integer('mileage');
-            $table->string('mileageUnit', 100);
+            $table->integer('name');
         });
     }
 

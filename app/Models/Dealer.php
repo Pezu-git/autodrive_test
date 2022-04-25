@@ -12,7 +12,7 @@ class Dealer extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        "id", "dealer"
+        'id', 'name'
     ];
 
     public function dataList()

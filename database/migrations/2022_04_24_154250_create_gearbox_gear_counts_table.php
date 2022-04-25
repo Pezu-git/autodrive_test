@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('brands', function (Blueprint $table) {
+        Schema::create('gearbox_gear_counts', function (Blueprint $table) {
             $table->id();
-            $table->string('brand', 100);
+            $table->string('name', 100);
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('brands');
+        Schema::dropIfExists('gearbox_gear_counts');
     }
 };

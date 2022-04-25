@@ -15,9 +15,7 @@ return new class extends Migration
     {
         Schema::create('body_configurations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('model_id')->default(0);
-            $table->foreign('model_id')->references('id')->on('models')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('bodyConfiguration', 100);
+            $table->string('name', 100);
         });
     }
 

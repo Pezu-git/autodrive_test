@@ -15,9 +15,7 @@ return new class extends Migration
     {
         Schema::create('complectations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('bodyConf_id');
-            $table->foreign('bodyConf_id')->references('id')->on('body_configurations')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('complectation', 100);
+            $table->string('name', 100);
         });
     }
 

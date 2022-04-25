@@ -10,7 +10,7 @@ class Generation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id', "bodyConf_id", "generation"
+        'id', 'name'
     ];
 
     public function configurationList()

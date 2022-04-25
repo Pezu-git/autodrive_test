@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('gearbox_types', function (Blueprint $table) {
             $table->id();
-            $table->string('gearboxType', 100);
-            $table->string('gearboxGearCount', 100);
+            $table->string('name', 100);
         });
     }
 

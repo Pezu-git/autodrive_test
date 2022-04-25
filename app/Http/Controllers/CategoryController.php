@@ -13,46 +13,14 @@ class CategoryController extends Controller
         return Category::all();
     }
 
-    public function store(Request $request)
+    static function store(Request $request)
     {
         $parser = new Parser;
         $model = new Category;
         $tag = 'category';
-        $tableCol = ["category", "subcategory"];
-        $insertParseXml = $parser->insertToDb($request, $tableCol);
+        $insertParseXml = $parser->parseXml($request, $model, $tag);
 
-        if ($request['file'] === '' || $request['file'] === null) {
-            $xmlVar = 'data.xml';
-        } else {
-            $xmlVar  = $request['file'] . '.xml';
-        }
-        $xmlDataString = file_get_contents(public_path($xmlVar));
-        $xmll = simplexml_load_string($xmlDataString);
-        $arr = [];
-        for ($i = 0; $i < count($xmll->vehicle); $i++) {
-            foreach ($xmll->vehicle[$i]->$tag as $a => $b) {
-
-                array_push($arr, $b);
-            }
-        }
-        foreach ($insertParseXml as $key => $value) {
-            $t = array_search($value['category'], $arr);
-            $ts = json_decode(json_encode($arr), true);
-            $insertParseXml[$key] += ['id' => $ts[$t]['@attributes']['id']];
-        }
-
-        foreach ($insertParseXml as $key => $value) {
-            $fid = $model::where('id', $value['id'])->where('subcategory', $value['subcategory'])->first();
-
-            if (!$fid) {
-                $model::insert([
-                    "id" => $value['id'],
-                    "category" => $value['category'],
-                    "subcategory" => $value['subcategory'],
-                ]);
-            }
-        }
-        return 'ok!';
+        return $insertParseXml;
     }
 
     public function show(Request $request)

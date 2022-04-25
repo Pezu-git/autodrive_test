@@ -12,7 +12,7 @@ class BodyColor extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        "bodyColor", "bodyColorMetallic"
+        "id", "name"
     ];
 
     public function dataList()

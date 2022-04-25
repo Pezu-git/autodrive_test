@@ -19,51 +19,14 @@ class BodyConfigurationController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      */
-    public function store(Request $request)
+    static function store(Request $request)
     {
         $parser = new Parser;
         $model = new BodyConfiguration;
         $tag = 'bodyConfiguration';
-        $tableCol = ["bodyConfiguration", "model"];
-        $insertParseXml = $parser->insertToDb($request, $tableCol);
+        $insertParseXml = $parser->parseXml($request, $model, $tag);
 
-
-        if ($request['file'] === '' || $request['file'] === null) {
-            $xmlVar = 'data.xml';
-        } else {
-            $xmlVar  = $request['file'] . '.xml';
-        }
-        $xmlDataString = file_get_contents(public_path($xmlVar));
-        $xmll = simplexml_load_string($xmlDataString);
-        $arr = [];
-        for ($i = 0; $i < count($xmll->vehicle); $i++) {
-            foreach ($xmll->vehicle[$i]->$tag as $a => $b) {
-                $modelVal = $xmll->vehicle[$i]->model;
-                array_push($arr, [$b, $modelVal]);
-            }
-        }
-
-        foreach ($insertParseXml as $key => $value) {
-            if ($insertParseXml[$key][$tag] === '') {
-                unset($insertParseXml[$key]);
-            }
-            $ts = json_decode(json_encode($arr), true);
-            if (array_key_exists('@attributes', $ts[$key][0])) {
-                $insertParseXml[$key] += ['id' => $ts[$key][0]['@attributes']['id']];
-                $insertParseXml[$key] += ['model_id' => $ts[$key][1]['@attributes']['id']];
-            }
-        }
-        foreach ($insertParseXml as $key => $value) {
-            $fid = $model::where('id', $value['id'])->first();
-            if (!$fid) {
-                $model::insert([
-                    "id" => $value['id'],
-                    "model_id" => $value['model_id'],
-                    "bodyConfiguration" => $value['bodyConfiguration'],
-                ]);
-            }
-        }
-        return 'ok!';
+        return $insertParseXml;
     }
 
     /**

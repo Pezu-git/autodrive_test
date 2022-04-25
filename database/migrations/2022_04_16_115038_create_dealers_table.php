@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('dealers', function (Blueprint $table) {
             $table->id();
-            $table->string('dealer', 160)->default('');
+            $table->string('name', 160)->default('');
         });
     }
 

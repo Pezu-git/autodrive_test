@@ -12,7 +12,7 @@ class Modification extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'id', "bodyConf_id", "modification"
+        'id', 'name'
     ];
 
     public function configurationList()

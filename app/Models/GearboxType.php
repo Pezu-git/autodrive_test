@@ -12,7 +12,7 @@ class GearboxType extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        "gearboxType", "gearboxGearCount"
+        'id', 'name'
     ];
 
     public function dataList()

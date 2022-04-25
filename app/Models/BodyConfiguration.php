@@ -12,7 +12,7 @@ class BodyConfiguration extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        "id", "model_id", "bodyConfiguration"
+        "id", "name"
     ];
 
     public function configurationList()

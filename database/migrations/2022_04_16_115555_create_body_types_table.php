@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('body_types', function (Blueprint $table) {
             $table->id();
-            $table->string('bodyType', 100);
-            $table->string('bodyDoorCount', 100);
+            $table->string('name', 100);
         });
     }
 

@@ -18,23 +18,14 @@ class DriveTypeController extends Controller
         return DriveType::all();
     }
 
-    public function store(Request $request)
+    static function store(Request $request)
     {
         $parser = new Parser;
         $model = new DriveType;
-        $tableCol = ["driveType"];
-        $insertParseXml = $parser->insertToDb($request, $tableCol);
+        $tag = 'driveType';
+        $insertParseXml = $parser->parseXml($request, $model, $tag);
 
-        foreach ($insertParseXml as $key => $value) {
-            $fid = $model::where('driveType', $value['driveType'])->first();
-
-            if (!$fid) {
-                $model::insert([
-                    "driveType" => $value['driveType'],
-                ]);
-            }
-        }
-        return 'ok!';
+        return $insertParseXml;
     }
 
     public function show(Request $request)

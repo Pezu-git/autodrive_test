@@ -14,34 +14,14 @@ class MileageController extends Controller
         return Mileage::all();
     }
 
-    public function store(Request $request)
+    static function store(Request $request)
     {
         $parser = new Parser;
         $model = new Mileage;
-        $phpDataArray = $parser->parseXml($request);
-        $tableCol = ["mileage", "mileageUnit"];
-        $dataArray = array();
-        $dataArray1 = array();
-        foreach ($phpDataArray['vehicle'] as $index => $data) {
+        $tag = 'mileage';
+        $insertParseXml = $parser->parseXml($request, $model, $tag);
 
-            $newData = $parser->vehicleToStr($data);
-            foreach ($tableCol as $key => $value) {
-                $dataArray1['data_id'] = $newData['id'];
-                $dataArray1[$value] = $newData[$value];
-            }
-            $dataArray[] = $dataArray1;
-        }
-        foreach ($dataArray as $key => $value) {
-            $fid = $model::where('data_id', $value['data_id'])->first();
-            if (!$fid) {
-                $model::insert([
-                    "data_id" => $value['data_id'],
-                    "mileage" => (int)$value['mileage'],
-                    "mileageUnit" => $value['mileageUnit'],
-                ]);
-            }
-        }
-        return 'ok!';
+        return $insertParseXml;
     }
 
     public function show(Request $request)
